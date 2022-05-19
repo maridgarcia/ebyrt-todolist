@@ -19,7 +19,6 @@ const createTask = async (newTask) => {
   return insertedId;
 };
 
-// Listar todas as tasks
 const getAllTasks = async (user) => {
   const db = await connect();
 
@@ -36,7 +35,6 @@ const findTaskById = async (id) => {
   return taskById;
 };
 
-// Atualizar uma task
 const updateTask = async (taskToUpdate) => {
   const {
     user, task, dueDate, id,
@@ -54,7 +52,6 @@ const updateTask = async (taskToUpdate) => {
   return updatedTask;
 };
 
-// Deletar uma task
 const removeTask = async (id) => {
   const db = await connect();
 
