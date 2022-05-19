@@ -1,4 +1,6 @@
-const { createTask, getAllTasks } = require('../models/tasks');
+const {
+  createTask, getAllTasks, updateTask,
+} = require('../models/tasks');
 
 const NOT_FOUND = new Error();
 NOT_FOUND.code = 'NotFound';
@@ -18,7 +20,14 @@ const getAllTasksService = async (user) => {
   return allTasks;
 };
 
+const updateTaskService = async (taskToUpdate) => {
+  const updatedTask = await updateTask(taskToUpdate);
+
+  return updatedTask;
+};
+
 module.exports = {
   createTaskService,
   getAllTasksService,
+  updateTaskService,
 };

@@ -1,4 +1,5 @@
 require('dotenv').config();
+const { ObjectId } = require('mongodb');
 const connect = require('./connection');
 
 const dbColletion = 'tasks';
@@ -27,8 +28,31 @@ const getAllTasks = async (user) => {
   return tasks;
 };
 
+const findTaskById = async (id) => {
+  const db = await connect();
+
+  const taskById = await db.collection(dbColletion).findOne({ _id: ObjectId(id) });
+
+  return taskById;
+};
+
 // Atualizar uma task
-// const updateTask = async () => {};
+const updateTask = async (taskToUpdate) => {
+  const {
+    user, task, dueDate, id,
+  } = taskToUpdate;
+  const db = await connect();
+  await db.collection(dbColletion)
+    .updateOne(
+      {
+        _id: ObjectId(id),
+      },
+      { $set: { task, dueDate, user } },
+    );
+  const updatedTask = await findTaskById(id);
+
+  return updatedTask;
+};
 
 // Deletar uma task
 // const removeTask = async () => {};
@@ -36,4 +60,6 @@ const getAllTasks = async (user) => {
 module.exports = {
   createTask,
   getAllTasks,
+  findTaskById,
+  updateTask,
 };

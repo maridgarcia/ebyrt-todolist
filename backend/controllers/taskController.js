@@ -1,6 +1,5 @@
 const rescue = require('express-rescue');
-const { createTaskService } = require('../services/taskService');
-const { getAllTasksService } = require('../services/taskService');
+const { createTaskService, getAllTasksService, updateTaskService } = require('../services/taskService');
 const validateSchema = require('../utils/schemas/validateSchema');
 const taskSchema = require('../utils/schemas/taskSchema');
 
@@ -24,7 +23,16 @@ const getAll = rescue(async (req, res) => {
   return res.status(200).json(tasks);
 });
 
+const update = rescue(async (req, res) => {
+  const { user } = req;
+  const { id } = req.params;
+  const task = await updateTaskService({ ...req.body, user: user.username, id });
+
+  return res.status(200).json(task);
+});
+
 module.exports = {
   create,
   getAll,
+  update,
 };
