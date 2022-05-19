@@ -15,9 +15,14 @@ const createUser = async (user) => {
   };
 };
 
-// const findUser = async () => {};
+const findUser = async (email) => {
+  const db = await connect();
+  const foundUser = await db.collection(dbColletion).findOne({ email });
+
+  return foundUser;
+};
 
 module.exports = {
   createUser,
-//   findUser,
+  findUser,
 };

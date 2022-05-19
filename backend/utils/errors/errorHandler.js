@@ -1,5 +1,4 @@
 const Joi = require('joi');
-const { BAD_REQUEST } = require('../statusCode');
 
 module.exports = (err, _req, res, next) => {
   if (!Joi.isError(err)) return next(err);
@@ -9,5 +8,5 @@ module.exports = (err, _req, res, next) => {
     message: err.message,
   };
 
-  return res.status(BAD_REQUEST).json({ message: error.message });
+  return res.status(400).json({ message: error.message });
 };
