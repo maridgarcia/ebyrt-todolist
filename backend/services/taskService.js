@@ -1,5 +1,5 @@
 const {
-  createTask, getAllTasks, updateTask,
+  createTask, getAllTasks, updateTask, removeTask,
 } = require('../models/tasks');
 
 const NOT_FOUND = new Error();
@@ -26,8 +26,17 @@ const updateTaskService = async (taskToUpdate) => {
   return updatedTask;
 };
 
+const removeTaskService = async (id) => {
+  const task = await removeTask(id);
+
+  if (!task) throw NOT_FOUND;
+
+  return task;
+};
+
 module.exports = {
   createTaskService,
   getAllTasksService,
   updateTaskService,
+  removeTaskService,
 };

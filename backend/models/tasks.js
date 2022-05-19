@@ -55,11 +55,20 @@ const updateTask = async (taskToUpdate) => {
 };
 
 // Deletar uma task
-// const removeTask = async () => {};
+const removeTask = async (id) => {
+  const db = await connect();
+
+  const taskById = await findTaskById(id);
+
+  await db.collection(dbColletion).deleteOne({ _id: ObjectId(id) }, {});
+
+  return taskById;
+};
 
 module.exports = {
   createTask,
   getAllTasks,
   findTaskById,
   updateTask,
+  removeTask,
 };
