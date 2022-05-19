@@ -1,6 +1,6 @@
 const md5 = require('md5');
 const { sign } = require('../utils/authorization/jwt');
-const { findUser } = require('../models/user');
+const { findUserByEmail } = require('../models/user');
 
 const AUTHORIZATION_ERROR = new Error();
 AUTHORIZATION_ERROR.code = 'Unauthorized';
@@ -11,7 +11,7 @@ USER_NOT_FOUND_ERROR.code = 'NotFound';
 USER_NOT_FOUND_ERROR.message = 'User does not exist';
 
 const loginService = async (email, password) => {
-  const userFoundByEmail = await findUser(email);
+  const userFoundByEmail = await findUserByEmail(email);
 
   if (!userFoundByEmail) throw USER_NOT_FOUND_ERROR;
 

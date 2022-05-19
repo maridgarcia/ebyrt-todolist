@@ -1,6 +1,6 @@
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
-const { findUser } = require('../../models/user');
+const { findUserByEmail } = require('../../models/user');
 
 const { JWT_SECRET } = process.env;
 
@@ -17,7 +17,7 @@ module.exports = async (req, res, next) => {
 
   try {
     const { email } = jwt.verify(token, JWT_SECRET, jwtConfig);
-    const user = await findUser(email);
+    const user = await findUserByEmail(email);
     req.user = user;
     next();
   } catch (error) {

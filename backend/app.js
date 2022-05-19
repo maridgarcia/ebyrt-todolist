@@ -11,7 +11,8 @@ app.use(express.json());
 app.use(cors());
 
 app.use('/register', routes.userRouter);
-app.use('/login', auth, routes.loginRouter);
+app.use('/login', routes.loginRouter);
+app.use('/create-task', auth, routes.taskRouter);
 
 app.use(domainError);
 app.use(errorHandler);
