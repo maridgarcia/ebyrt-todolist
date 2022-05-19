@@ -20,8 +20,10 @@ const loginService = async (email, password) => {
   if (encryptPassword !== userFoundByEmail.password) throw AUTHORIZATION_ERROR;
   const token = sign({ email });
 
+  const { _id } = userFoundByEmail;
+
   return {
-    id: userFoundByEmail.insertedId,
+    id: _id,
     username: userFoundByEmail.username,
     email: userFoundByEmail.email,
     token,
