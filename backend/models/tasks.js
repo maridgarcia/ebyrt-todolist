@@ -1,4 +1,3 @@
-require('dotenv').config();
 const { ObjectId } = require('mongodb');
 const connect = require('./connection');
 
@@ -67,6 +66,19 @@ const showTasksByAlphabeticOrder = async (user) => {
   return tasks;
 };
 
+const updateStatus = async (statusToUpdate) => {
+  const { id, status } = statusToUpdate;
+  const db = await connect();
+
+  await db.collection(dbColletion)
+    .updateOne({
+      _id: ObjectId(id),
+    }, { $set: { status } });
+
+  const task = findTaskById(id);
+  return task;
+};
+
 const removeTask = async (id) => {
   const db = await connect();
 
@@ -84,5 +96,6 @@ module.exports = {
   updateTask,
   showTasksByDate,
   showTasksByAlphabeticOrder,
+  updateStatus,
   removeTask,
 };

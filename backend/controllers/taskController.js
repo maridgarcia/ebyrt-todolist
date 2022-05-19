@@ -5,10 +5,12 @@ const {
   updateTaskService,
   taskByDateService,
   taskByAlphabeticOrderService,
+  updateStatusService,
   removeTaskService,
 } = require('../services/taskService');
 const validateSchema = require('../utils/schemas/validateSchema');
 const taskSchema = require('../utils/schemas/taskSchema');
+const statusSchema = require('../utils/schemas/statusSchema');
 
 const create = rescue(async (req, res) => {
   const { user } = req;
@@ -52,6 +54,15 @@ const taskByAlphaOrder = rescue(async (req, res) => {
   return res.status(200).json(tasks);
 });
 
+const updateStatus = rescue(async (req, res) => {
+  const { id } = req.params;
+  const { status } = req.body;
+  validateSchema(statusSchema, req.body);
+  const task = await updateStatusService({ id, status });
+
+  return res.status(200).json(task);
+});
+
 const remove = rescue(async (req, res) => {
   const { id } = req.params;
   await removeTaskService(id);
@@ -65,5 +76,6 @@ module.exports = {
   update,
   taskByDate,
   taskByAlphaOrder,
+  updateStatus,
   remove,
 };

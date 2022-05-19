@@ -3,6 +3,7 @@ const errorMap = {
   Unauthorized: 400,
   NotFound: 404,
   UnauthorizedUser: 401,
+  BadRequest: 401,
 };
 
 module.exports = (err, _req, res, next) => {
