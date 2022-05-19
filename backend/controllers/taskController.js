@@ -1,6 +1,11 @@
 const rescue = require('express-rescue');
 const {
-  createTaskService, getAllTasksService, updateTaskService, removeTaskService,
+  createTaskService,
+  getAllTasksService,
+  updateTaskService,
+  taskByDateService,
+  taskByAlphabeticOrderService,
+  removeTaskService,
 } = require('../services/taskService');
 const validateSchema = require('../utils/schemas/validateSchema');
 const taskSchema = require('../utils/schemas/taskSchema');
@@ -33,6 +38,20 @@ const update = rescue(async (req, res) => {
   return res.status(200).json(task);
 });
 
+const taskByDate = rescue(async (req, res) => {
+  const { user } = req;
+  const tasks = await taskByDateService(user.username);
+
+  return res.status(200).json(tasks);
+});
+
+const taskByAlphaOrder = rescue(async (req, res) => {
+  const { user } = req;
+  const tasks = await taskByAlphabeticOrderService(user.username);
+
+  return res.status(200).json(tasks);
+});
+
 const remove = rescue(async (req, res) => {
   const { id } = req.params;
   await removeTaskService(id);
@@ -44,5 +63,7 @@ module.exports = {
   create,
   getAll,
   update,
+  taskByDate,
+  taskByAlphaOrder,
   remove,
 };

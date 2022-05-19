@@ -4,7 +4,6 @@ const connect = require('./connection');
 
 const dbColletion = 'tasks';
 
-// Criar task
 const createTask = async (newTask) => {
   const createdAt = new Date();
   const {
@@ -52,6 +51,22 @@ const updateTask = async (taskToUpdate) => {
   return updatedTask;
 };
 
+const showTasksByDate = async (user) => {
+  const db = await connect();
+
+  const tasks = await db.collection(dbColletion).find({ user }).sort({ createdAt: -1 }).toArray();
+
+  return tasks;
+};
+
+const showTasksByAlphabeticOrder = async (user) => {
+  const db = await connect();
+
+  const tasks = await db.collection(dbColletion).find({ user }).sort({ task: 1 }).toArray();
+
+  return tasks;
+};
+
 const removeTask = async (id) => {
   const db = await connect();
 
@@ -67,5 +82,7 @@ module.exports = {
   getAllTasks,
   findTaskById,
   updateTask,
+  showTasksByDate,
+  showTasksByAlphabeticOrder,
   removeTask,
 };
