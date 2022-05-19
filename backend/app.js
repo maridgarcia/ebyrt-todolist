@@ -14,7 +14,7 @@ app.use('/register', routes.userRouter);
 app.use('/login', routes.loginRouter);
 app.use('/create-task', auth, routes.taskRouter);
 app.use('/tasks', auth, routes.taskRouter);
-app.use('/task/', auth, routes.taskRouter);
+app.use('/task', auth, routes.taskRouter);
 
 app.use(domainError);
 app.use(errorHandler);

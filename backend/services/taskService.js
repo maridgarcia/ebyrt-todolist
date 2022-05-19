@@ -5,16 +5,13 @@ const {
   removeTask,
   showTasksByDate,
   showTasksByAlphabeticOrder,
+  showTasksByStatus,
   updateStatus,
 } = require('../models/tasks');
 
 const NOT_FOUND = new Error();
 NOT_FOUND.code = 'NotFound';
 NOT_FOUND.message = 'No tasks found';
-
-const BAD_REQUEST = new Error();
-BAD_REQUEST.code = 'BadRequest';
-BAD_REQUEST.message = 'Status is not allowed to be empty';
 
 const createTaskService = async (newTask) => {
   const taskCreated = await createTask(newTask);
@@ -52,11 +49,18 @@ const taskByAlphabeticOrderService = async (user) => {
   return tasks;
 };
 
+const tasksByStatusService = async (user) => {
+  const tasks = await showTasksByStatus(user);
+
+  if (tasks.length === 0) throw NOT_FOUND;
+
+  return tasks;
+};
+
 const updateStatusService = async (status) => {
   const task = await updateStatus(status);
 
   if (!task) throw NOT_FOUND;
-  if (task === '') throw BAD_REQUEST;
 
   return task;
 };
@@ -76,5 +80,6 @@ module.exports = {
   taskByDateService,
   taskByAlphabeticOrderService,
   updateStatusService,
+  tasksByStatusService,
   removeTaskService,
 };

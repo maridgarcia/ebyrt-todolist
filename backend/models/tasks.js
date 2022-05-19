@@ -66,6 +66,15 @@ const showTasksByAlphabeticOrder = async (user) => {
   return tasks;
 };
 
+const showTasksByStatus = async (user) => {
+  const db = await connect();
+  const tasks = await db.collection(dbColletion)
+    .find({ user })
+    .sort({ status: -1 })
+    .toArray();
+  return tasks;
+};
+
 const updateStatus = async (statusToUpdate) => {
   const { id, status } = statusToUpdate;
   const db = await connect();
@@ -96,6 +105,7 @@ module.exports = {
   updateTask,
   showTasksByDate,
   showTasksByAlphabeticOrder,
+  showTasksByStatus,
   updateStatus,
   removeTask,
 };
