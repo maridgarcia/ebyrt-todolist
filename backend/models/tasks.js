@@ -19,7 +19,13 @@ const createTask = async (newTask) => {
 };
 
 // Listar todas as tasks
-// const getAllTasks = async () => {};
+const getAllTasks = async (user) => {
+  const db = await connect();
+
+  const tasks = await db.collection(dbColletion).find({ user }).toArray();
+
+  return tasks;
+};
 
 // Atualizar uma task
 // const updateTask = async () => {};
@@ -29,4 +35,5 @@ const createTask = async (newTask) => {
 
 module.exports = {
   createTask,
+  getAllTasks,
 };
