@@ -6,7 +6,7 @@ const dbName = 'todo_list';
 
 const connect = () => mongodb.connect(ATLAS_URI, {
   useNewUrlParser: true,
-  useUnifiedTopolody: true,
+  useUnifiedTopology: true,
 })
   .then((connection) => connection.db(dbName))
   .catch((err) => {
