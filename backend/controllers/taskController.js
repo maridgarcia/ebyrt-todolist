@@ -38,7 +38,7 @@ const update = rescue(async (req, res) => {
   const { id } = req.params;
   const task = await updateTaskService({ ...req.body, user: user.username, id });
 
-  return res.status(200).json(task);
+  return res.status(204).json(task);
 });
 
 const taskByDate = rescue(async (req, res) => {
@@ -69,7 +69,7 @@ const updateStatus = rescue(async (req, res) => {
   validateSchema(statusSchema, req.body);
   const task = await updateStatusService({ id, status });
 
-  return res.status(200).json(task);
+  return res.status(204).json(task);
 });
 
 const remove = rescue(async (req, res) => {
