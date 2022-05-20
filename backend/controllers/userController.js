@@ -7,7 +7,7 @@ const createNewUser = rescue(async (req, res) => {
   validateSchema(userSchema, req.body);
   const token = await create(req.body);
 
-  return res.status(201).json({ token });
+  return res.status(201).json(token);
 });
 
 module.exports = { createNewUser };
