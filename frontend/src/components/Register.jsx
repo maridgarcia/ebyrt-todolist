@@ -1,8 +1,8 @@
 /* eslint-disable no-alert */
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import api from '../api';
-import UserContext from '../context/UserContext';
+// import api from '../api';
+// import UserContext from '../context/UserContext';
 import Input from './Input';
 import Button from './Button';
 
@@ -13,20 +13,24 @@ function Register() {
     password: '',
   });
 
-  const { setUsername } = useContext(UserContext);
+  // const { setUsername } = useContext(UserContext);
   const navigate = useNavigate();
 
   const handleRegister = async (e) => {
     e.preventDefault();
-    try {
-      await api.post('/register', register);
-      const response = await api.post('/login', { email: register.email, password: register.password });
-      localStorage.setItem('authorization', response.data.token);
-      setUsername(response.data.username);
-      navigate('/login');
-    } catch (error) {
-      alert(error);
-    }
+    const newUser = { ...register };
+    await fetch('http://localhost:3001/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newUser),
+    })
+      .catch((error) => {
+        window.alert(error);
+      });
+    setRegister({ username: '', email: '', password: '' });
+    navigate('/login');
   };
   return (
     <div>

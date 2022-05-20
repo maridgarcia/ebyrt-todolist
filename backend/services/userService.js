@@ -1,5 +1,5 @@
 const md5 = require('md5');
-const { createUser, findUserByEmail } = require('../models/user');
+const { createUser, findUserByEmail, findUserByUsername } = require('../models/user');
 const { sign } = require('../utils/authorization/jwt');
 
 const ALREADY_EXISTS = new Error();
@@ -12,11 +12,11 @@ const findUserEmail = async (email) => {
   if (foundUser) throw ALREADY_EXISTS;
 };
 
-// const findUserName = async (name) => {
-//   const foundUser = await findUserByName(name);
+const findUserName = async (name) => {
+  const foundUser = await findUserByUsername(name);
 
-//   if (foundUser) throw ALREADY_EXISTS;
-// };
+  if (foundUser) throw ALREADY_EXISTS;
+};
 
 const create = async (user) => {
   const { username, email, password } = user;
@@ -24,11 +24,15 @@ const create = async (user) => {
   const encryptPassword = md5(password);
 
   await findUserEmail(email);
-  // await findUserName(username);
+  await findUserName(username);
   await createUser({ username, email, password: encryptPassword });
   const token = sign({ username, email });
 
-  return token;
+  return {
+    username,
+    email,
+    token,
+  };
 };
 
 module.exports = {
