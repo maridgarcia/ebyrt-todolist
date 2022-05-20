@@ -217,6 +217,7 @@ Retornará com as seguintes informações e o código `HTTP 200 - OK`:
 ### `task/:id`: Requisição `DELETE`. 
 Remove uma tarefa. Deve-se informar o id da tarefa a ser removida no parâmetro ":id" da URL. Não é necessário passar informação no corpo da requisição. Também não haverá resposta no corpo, apenas o `Status HTTP 200 - OK.`
 
-
+# Tecnologias utilizadas:
+	NodeJS, Express e Mongoose.
 
 
